@@ -1,0 +1,451 @@
+/**
+ * ChurchTools Calendar Styles
+ * Scandinavian minimal design with lime green accent
+ */
+
+// Variables
+$primary-color: #b4d336; // Lime green
+$text-primary: #2c3e50;
+$text-secondary: #5d6465;
+$white: #ffffff;
+$light-gray: #f8f9fa;
+$border-color: #e9ecef;
+$shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+$shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+$mobile-breakpoint: 768px;
+
+// Reset and base styles
+* {
+    box-sizing: border-box;
+}
+
+// Main container
+.churchtools-calendar {
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Inter', 'Lato', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    color: $text-primary;
+    line-height: 1.6;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+// Calendar card
+.calendar-card {
+    background: $white;
+    border-radius: 16px;
+    box-shadow: $shadow;
+    padding: 32px;
+    transition: box-shadow 0.3s ease;
+
+    @media (max-width: $mobile-breakpoint) {
+        padding: 20px;
+        border-radius: 12px;
+    }
+}
+
+// Month Navigation
+.month-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    gap: 16px;
+
+    @media (max-width: $mobile-breakpoint) {
+        margin-bottom: 24px;
+    }
+
+    .current-month {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin: 0;
+        text-align: center;
+        flex: 1;
+
+        @media (max-width: $mobile-breakpoint) {
+            font-size: 20px;
+        }
+    }
+
+    .nav-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: transparent;
+        border: 2px solid $border-color;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 14px;
+        color: $text-secondary;
+
+        &:hover {
+            background: $light-gray;
+            border-color: $primary-color;
+            color: $text-primary;
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+
+        .month-name {
+            text-transform: capitalize;
+
+            @media (max-width: $mobile-breakpoint) {
+                display: none;
+            }
+        }
+
+        svg {
+            flex-shrink: 0;
+        }
+    }
+}
+
+// Calendar content layout
+.calendar-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+
+    @media (max-width: $mobile-breakpoint) {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+// Calendar Grid
+.calendar-grid {
+    .weekday-headers {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-bottom: 12px;
+
+        .weekday-header {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: $text-secondary;
+            padding: 8px 0;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+
+        .calendar-day {
+            position: relative;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 16px;
+            color: $text-primary;
+            padding: 8px;
+
+            @media (max-width: $mobile-breakpoint) {
+                font-size: 14px;
+            }
+
+            &:hover {
+                background: $light-gray;
+            }
+
+            &.other-month {
+                color: $text-secondary;
+                opacity: 0.5;
+            }
+
+            &.today {
+                font-weight: 700;
+                color: $primary-color;
+            }
+
+            &.selected {
+                background: $primary-color;
+                color: $white;
+                font-weight: 600;
+                box-shadow: 0 2px 8px rgba(180, 211, 54, 0.3);
+
+                &:hover {
+                    background: darken($primary-color, 5%);
+                }
+
+                .event-indicator {
+                    background: $white;
+                }
+            }
+
+            .day-number {
+                position: relative;
+                z-index: 1;
+            }
+
+            .event-indicator {
+                position: absolute;
+                bottom: 6px;
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background: $text-secondary;
+                transition: background 0.2s ease;
+            }
+        }
+    }
+}
+
+// Event List
+.event-list {
+    .event-list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid $border-color;
+
+        .event-list-title {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .selected-day-badge {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid $text-primary;
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 16px;
+        }
+    }
+
+    .events-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-height: 600px;
+        overflow-y: auto;
+        padding-right: 8px;
+
+        @media (max-width: $mobile-breakpoint) {
+            max-height: none;
+        }
+
+        // Custom scrollbar
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: $light-gray;
+            border-radius: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $text-secondary;
+            border-radius: 3px;
+
+            &:hover {
+                background: $text-secondary;
+            }
+        }
+    }
+
+    .no-events {
+        text-align: center;
+        padding: 40px 20px;
+        color: $text-secondary;
+
+        p {
+            margin: 0;
+            font-style: italic;
+        }
+    }
+}
+
+// Event Item
+.event-item {
+
+    -webkit-tap-highlight-color: transparent;
+    border: 2px solid $border-color;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: $primary-color;
+        box-shadow: $shadow;
+    }
+
+    .event-image {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        overflow: hidden;
+
+        img {
+            aspect-ratio: 2/1;
+            object-fit: cover;
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
+
+    .event-header {
+        padding: 16px;
+        padding-bottom: 0px;
+
+        .event-time {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: $text-secondary;
+            font-size: 14px;
+            margin-bottom: 8px;
+
+            .clock-icon {
+                flex-shrink: 0;
+            }
+        }
+
+        .event-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: $primary-color;
+            letter-spacing: 0.3px;
+        }
+    }
+
+    .event-hint {
+        padding: 16px;
+        padding-top: 0px;
+        font-size: 13px;
+        color: $text-secondary;
+        margin: 8px 0 0 0;
+        font-style: italic;
+    }
+
+    .event-details {
+        padding: 16px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid $border-color;
+
+        .event-description {
+            margin-bottom: 12px;
+
+            p {
+                margin: 0;
+                color: $text-primary;
+                line-height: 1.6;
+            }
+        }
+
+        .event-address {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: $text-secondary;
+            font-size: 14px;
+
+            .location-icon {
+                flex-shrink: 0;
+                margin-top: 2px;
+            }
+
+            span {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                strong {
+                    color: $text-primary;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+
+// Loading and Error States
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: $text-secondary;
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid $border-color;
+        border-top-color: $primary-color;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin-bottom: 16px;
+    }
+
+    p {
+        margin: 0;
+        font-size: 14px;
+    }
+}
+
+.error-message {
+    padding: 16px;
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    p {
+        margin: 0;
+        color: #c33;
+        font-size: 14px;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Print styles
+@media print {
+    .churchtools-calendar {
+        .month-navigation .nav-button {
+            display: none;
+        }
+
+        .calendar-card {
+            box-shadow: none;
+        }
+
+        .event-item {
+            break-inside: avoid;
+        }
+    }
+}
