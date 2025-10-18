@@ -22,7 +22,7 @@
 
 5. **Configure settings**:
    - Go to Settings → ChurchTools Calendar
-   - Enter your ChurchTools API base URL (e.g., `https://your-church.church.tools`)
+   - Enter your ChurchTools API base URL (e.g., `https://your-church.church.tools/api`)
    - Save settings
 
 6. **Use the shortcode**:
@@ -102,26 +102,9 @@ src/
 └── main.tsx        # Entry point
 ```
 
-## Key Features
-
-✅ TypeScript with strict typing
-✅ React 18 with hooks
-✅ Vite for fast builds
-✅ SCSS with mobile-first design
-✅ date-fns for date handling
-✅ Finnish locale support
-✅ Responsive layout
-✅ Expandable event details
-
 ## Next Steps
 
 1. Test the calendar on your WordPress site
 2. Customize colors in `src/styles/calendar.scss`
 3. Adjust date formats in `src/utils/date.utils.ts`
 4. Add more features as needed
-
-## Support
-
-- Check README.md for full documentation
-- Review ChurchTools API documentation
-- Check browser console for errors

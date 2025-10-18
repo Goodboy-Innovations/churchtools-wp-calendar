@@ -2,17 +2,6 @@
 
 A modern WordPress plugin for displaying ChurchTools calendar events with a beautiful, responsive interface built with React, TypeScript, and Vite.
 
-## Features
-
-- 📅 **Interactive Calendar Grid** - Month view with date selection
-- 🎯 **Event List** - Detailed event information for selected dates
-- 📱 **Fully Responsive** - Optimized for both desktop and mobile devices
-- 🎨 **Scandinavian Design** - Clean, minimal interface with lime green accents
-- 🌍 **Finnish Language** - Built-in Finnish language support
-- ⚡ **Fast Performance** - Built with Vite for optimal bundle size
-- 🔒 **Type-Safe** - Fully typed with TypeScript
-- 🎭 **Expandable Events** - Click events to see full details
-
 ## Tech Stack
 
 - **Frontend**: React 18, TypeScript
@@ -32,13 +21,6 @@ A modern WordPress plugin for displaying ChurchTools calendar events with a beau
 
 ### Setup
 
-1. **Clone or download this plugin** to your WordPress plugins directory:
-   ```bash
-   cd wp-content/plugins/
-   git clone [your-repo-url] churchtools-wp-calendar
-   cd churchtools-wp-calendar
-   ```
-
 2. **Install dependencies**:
    ```bash
    npm install
@@ -56,7 +38,7 @@ A modern WordPress plugin for displaying ChurchTools calendar events with a beau
 
 5. **Configure the plugin**:
    - Go to Settings → ChurchTools Calendar
-   - Enter your ChurchTools API base URL (e.g., `https://your-church.church.tools`)
+   - Enter your ChurchTools API base URL (e.g., `https://your-church.church.tools/api`)
    - Click "Save Settings"
 
 ## Usage
@@ -177,14 +159,6 @@ The plugin uses Finnish locale by default. To change:
 2. Import different locale from `date-fns/locale`
 3. Update format functions
 
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
 ## Troubleshooting
 
 ### Calendar not displaying
@@ -200,37 +174,3 @@ The plugin uses Finnish locale by default. To change:
 2. Check calendar ID is valid
 3. Ensure API endpoint is accessible
 4. Check for CORS issues
-
-### Build issues
-
-1. Clear node_modules: `rm -rf node_modules`
-2. Reinstall: `npm install`
-3. Rebuild: `npm run build`
-
-## Contributing
-
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## License
-
-GPL v2 or later
-
-## Support
-
-For issues and questions:
-- Open an issue on GitHub
-- Check existing documentation
-- Review ChurchTools API documentation
-
-## Credits
-
-Built with:
-- React
-- TypeScript
-- Vite
-- date-fns
-- WordPress
