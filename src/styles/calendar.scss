@@ -12,7 +12,7 @@ $light-gray: #f8f9fa;
 $border-color: #e9ecef;
 $shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 $shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
-$mobile-breakpoint: 768px;
+$mobile-breakpoint: 850px;
 
 // Reset and base styles
 * {
@@ -22,12 +22,12 @@ $mobile-breakpoint: 768px;
 // Main container
 .churchtools-calendar {
     -webkit-tap-highlight-color: transparent;
-    font-family: 'Inter', 'Lato', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    // font-family: 'Inter', 'Lato', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
     color: $text-primary;
     line-height: 1.6;
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
-    padding: 20px;
+    // padding: 20px;
 }
 
 // Calendar card
@@ -142,6 +142,7 @@ $mobile-breakpoint: 768px;
         gap: 8px;
 
         .calendar-day {
+            height: 100%;
             position: relative;
             aspect-ratio: 1;
             display: flex;

@@ -39,13 +39,6 @@ const App: React.FC<AppProps> = ({ baseUrl, calendarId }) => {
           </div>
         )}
 
-        {/* {loading && (
-          <div className="loading-spinner">
-            <div className="spinner"></div>
-            <p>Ladataan tapahtumia...</p>
-          </div>
-        )} */}
-
         <div className="calendar-content">
           <div className="calendar-section">
             <CalendarGrid
