@@ -74,6 +74,9 @@ export const ListViewEventItem: React.FC<ListViewEventItemProps> = ({
                 <h3 className="event-title" style={{ color }}>
                     {title}
                 </h3>
+                <h3 className="event-subtitle">
+                    {event.subtitle}
+                </h3>
 
             </div>
             {!disableFlags.description && !expanded && canExpand && (

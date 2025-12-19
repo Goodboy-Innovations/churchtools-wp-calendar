@@ -40,7 +40,7 @@ export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setEx
         
         return `${startTime} - ${endTime}`;
     };
-
+    console.log(event);
     return (
         <div className="event-item" onClick={toggleExpanded} role="button" tabIndex={0}>
             {event.image && (
@@ -70,6 +70,11 @@ export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setEx
                 <h3 className="event-title" style={{ color }}>
                     {title}
                 </h3>
+                {event.subtitle &&
+                <h3 className="event-subtitle">
+                    {event.subtitle}
+                </h3>
+                }
             </div>
 
             {expanded && (event.description || event.address || event.link) && (
@@ -114,7 +119,7 @@ export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setEx
             )}
 
             {!expanded && (event.description || event.address || event.link) && (
-                <p className="event-hint">Napauta tapahtuman otsikkoa nähdäksesi lisätietoja!</p>
+                <p className="event-hint">Napauta tapahtumaa nähdäksesi lisätietoja</p>
             )}
         </div>
     );

@@ -15,6 +15,7 @@ export interface AppointmentCalculated {
     startDate: string;
 }
 export interface AppointmentBase {
+  subtitle: string | null;
   title: string;
   additionals: Additional[];
   address: Address | null;

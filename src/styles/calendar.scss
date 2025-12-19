@@ -297,7 +297,7 @@ $mobile-breakpoint: 850px;
 
     .event-header {
         padding: 16px;
-        padding-bottom: 0px;
+        padding-bottom: 6px;
 
         .event-time {
             display: flex;
@@ -313,10 +313,19 @@ $mobile-breakpoint: 850px;
         }
 
         .event-title {
-            font-size: 16px;
+            font-size: 24px;
             font-weight: 700;
-            margin: 0 0 8px 0;
+            margin: 0 0 0 0;
+            padding: 0;
             color: $primary-color;
+            letter-spacing: 0.3px;
+        }
+        .event-subtitle {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 0 0;
+            padding: 0;
+            color: $text-primary;
             letter-spacing: 0.3px;
         }
     }
@@ -506,7 +515,12 @@ $mobile-breakpoint: 850px;
       font-size: calc(1.25rem * var(--lv-scale));
       margin: 0;
     }
-
+    h3.event-subtitle {
+        font-size: calc(1.1rem * var(--lv-scale));
+        font-weight: 600;
+        margin: 0;
+        color: $text-primary;
+    }
     p {
       font-size: calc(1rem * var(--lv-scale));
     }
