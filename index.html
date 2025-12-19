@@ -118,6 +118,55 @@
       value="8"
     />
     
+    <label for="view-type">View Type:</label>
+    <select id="view-type" style="width: 100%; padding: 10px; border: 1px solid #e9ecef; border-radius: 4px; font-size: 14px; margin-bottom: 10px;">
+      <option value="calendar">Calendar View (Monthly Grid)</option>
+      <option value="list">List View (Upcoming Events)</option>
+    </select>
+    
+    <div id="listview-options" style="display: none; padding: 15px; background: #f8f9fa; border-radius: 4px; margin-bottom: 10px;">
+      <h4 style="margin-top: 0; font-size: 14px; color: #2c3e50;">List View Options:</h4>
+      
+      <label for="days">Days to Show:</label>
+      <input 
+        type="number" 
+        id="days" 
+        placeholder="7"
+        value="7"
+        min="1"
+        max="365"
+        style="width: 100%; padding: 8px; border: 1px solid #e9ecef; border-radius: 4px; font-size: 14px; margin-bottom: 10px;"
+      />
+      
+      <label for="scale">Text Scale:</label>
+      <input 
+        type="number" 
+        id="scale" 
+        placeholder="1.0"
+        value="1.0"
+        min="0.5"
+        max="5"
+        step="0.1"
+        style="width: 100%; padding: 8px; border: 1px solid #e9ecef; border-radius: 4px; font-size: 14px; margin-bottom: 10px;"
+      />
+      
+      <label style="display: block; margin-bottom: 5px;">Disable Features:</label>
+      <div style="margin-bottom: 10px;">
+        <label style="display: inline-flex; align-items: center; margin-right: 15px; font-weight: normal;">
+          <input type="checkbox" id="disable-description" style="width: auto; margin: 0 5px 0 0;"> Description
+        </label>
+        <label style="display: inline-flex; align-items: center; margin-right: 15px; font-weight: normal;">
+          <input type="checkbox" id="disable-location" style="width: auto; margin: 0 5px 0 0;"> Location
+        </label>
+        <label style="display: inline-flex; align-items: center; margin-right: 15px; font-weight: normal;">
+          <input type="checkbox" id="disable-link" style="width: auto; margin: 0 5px 0 0;"> Link
+        </label>
+        <label style="display: inline-flex; align-items: center; font-weight: normal;">
+          <input type="checkbox" id="disable-today" style="width: auto; margin: 0 5px 0 0;"> Today
+        </label>
+      </div>
+    </div>
+    
     <button onclick="initCalendar()">Load Calendar</button>
   </div>
 
@@ -128,11 +177,19 @@
     import React from 'react';
     import { createRoot } from 'react-dom/client';
     import App from './src/App.tsx';
+    import { ListViewApp } from './src/components/ListViewApp.tsx';
+
+    // Toggle list view options visibility
+    document.getElementById('view-type').addEventListener('change', function() {
+      const listviewOptions = document.getElementById('listview-options');
+      listviewOptions.style.display = this.value === 'list' ? 'block' : 'none';
+    });
 
     // Make initCalendar available globally
     window.initCalendar = function() {
       const baseUrl = document.getElementById('base-url').value;
       const calendarId = document.getElementById('calendar-id').value;
+      const viewType = document.getElementById('view-type').value;
       
       if (!baseUrl || !calendarId) {
         alert('Please enter both Base URL and Calendar ID');
@@ -142,12 +199,47 @@
       const container = document.getElementById('churchtools-calendar-dev');
       container.innerHTML = ''; // Clear previous instance
       
+      // Build query string for list view
+      let queryString = '';
+      if (viewType === 'list') {
+        const params = new URLSearchParams();
+        
+        const days = document.getElementById('days').value;
+        if (days) params.append('days', days);
+        
+        const scale = document.getElementById('scale').value;
+        if (scale && scale !== '1.0') params.append('scale', scale);
+        
+        const disabled = [];
+        if (document.getElementById('disable-description').checked) disabled.push('description');
+        if (document.getElementById('disable-location').checked) disabled.push('location');
+        if (document.getElementById('disable-link').checked) disabled.push('link');
+        if (document.getElementById('disable-today').checked) disabled.push('today');
+        if (disabled.length > 0) params.append('disable', disabled.join(','));
+        
+        queryString = params.toString();
+        if (queryString) {
+          // Update URL without reload
+          const newUrl = window.location.pathname + '?' + queryString;
+          window.history.pushState({}, '', newUrl);
+        }
+      }
+      
       const root = createRoot(container);
-      root.render(
-        React.createElement(React.StrictMode, null,
-          React.createElement(App, { baseUrl, calendarId })
-        )
-      );
+      
+      if (viewType === 'list') {
+        root.render(
+          React.createElement(React.StrictMode, null,
+            React.createElement(ListViewApp, { baseUrl, calendarId })
+          )
+        );
+      } else {
+        root.render(
+          React.createElement(React.StrictMode, null,
+            React.createElement(App, { baseUrl, calendarId })
+          )
+        );
+      }
     };
 
     // Auto-initialize on page load

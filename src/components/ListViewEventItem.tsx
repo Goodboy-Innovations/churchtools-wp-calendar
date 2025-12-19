@@ -1,29 +1,48 @@
 /**
- * Event Item Component
+ * List View Event Item Component
+ * Simplified event item for list view without images
  */
 
 import React from 'react';
 import { formatTime, formatDate, isMultiDayEvent } from '../utils/date.utils';
 import { Appointment } from '../types/api.types';
 
-interface EventItemProps {
+interface ListViewEventItemProps {
     eventData: Appointment;
     expanded: boolean;
     setExpanded: (id: number | null) => void;
+    disableFlags: {
+        description: boolean;
+        location: boolean;
+        link: boolean;
+    };
 }
 
-export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setExpanded }) => {
+export const ListViewEventItem: React.FC<ListViewEventItemProps> = ({
+    eventData,
+    expanded,
+    setExpanded,
+    disableFlags,
+}) => {
     const event = eventData.base;
     const startTime = formatTime(eventData.calculated.startDate);
     const endTime = formatTime(eventData.calculated.endDate);
     const startDate = formatDate(eventData.calculated.startDate);
     const endDate = formatDate(eventData.calculated.endDate);
-    const isMultiDay = isMultiDayEvent(eventData.calculated.startDate, eventData.calculated.endDate);
+    const isMultiDay = isMultiDayEvent(
+        eventData.calculated.startDate,
+        eventData.calculated.endDate
+    );
     const title = event.title || 'Tapahtuma';
     const color = event.calendar.color || '#b4d336';
 
+    // Only allow interaction if description is not disabled
+    const canExpand = !disableFlags.description && (event.description || event.address || event.link);
+
     const toggleExpanded = () => {
-        setExpanded(event.id);
+        if (canExpand) {
+            setExpanded(expanded ? null : event.id);
+        }
     };
 
     const renderTimeDisplay = () => {
@@ -33,48 +52,54 @@ export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setEx
             }
             return 'Koko päivä';
         }
-        
+
         if (isMultiDay) {
             return `${startDate} ${startTime} - ${endDate} ${endTime}`;
         }
-        
+
         return `${startTime} - ${endTime}`;
     };
 
     return (
-        <div className="event-item" onClick={toggleExpanded} role="button" tabIndex={0}>
-            {event.image && (
-                <div className="event-image">
-                    <img src={event.image.imageUrl + '?w=645&h=323'} alt={event.image.name} />
-                </div>
-            )}
-
+        <div
+            className={`listview-event-item ${canExpand ? 'expandable' : 'non-expandable'}`}
+            onClick={toggleExpanded}
+            role={canExpand ? 'button' : undefined}
+            tabIndex={canExpand ? 0 : undefined}
+        >
             <div className="event-header">
-
                 <div className="event-time">
-                    <svg
-                        className="clock-icon"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                    >
-                        <circle cx="12" cy="12" r="10" strokeWidth="2" />
-                        <path d="M12 6v6l4 2" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                    <span>
-                        {renderTimeDisplay()}
-                    </span>
+                    <span>{renderTimeDisplay()}</span>
                 </div>
                 <h3 className="event-title" style={{ color }}>
                     {title}
                 </h3>
-            </div>
 
-            {expanded && (event.description || event.address || event.link) && (
+            </div>
+            {!disableFlags.description && !expanded && canExpand && (
+                <div className="dropdown-icon">
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M6 9l6 6 6-6"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+                </div>
+            )}
+
+            {!disableFlags.description && expanded && (event.description || event.address || event.link) && (
                 <div className="event-details">
-                    {event.address && (
+                    {!disableFlags.location && event.address && (
                         <div className="event-address">
                             <svg
                                 className="location-icon"
@@ -91,11 +116,9 @@ export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setEx
                                 <circle cx="12" cy="10" r="3" strokeWidth="2" />
                             </svg>
                             <span>
-                                {event.address.name && <strong>{event.address.name}</strong>}
-                                {event.address.street && <span>{event.address.street}</span>}
-                                {event.address.city && (
+                                {event.address && (
                                     <span>
-                                        {event.address.zip} {event.address.city}
+                                        {event.address?.name} {event.address?.street} {event.address?.zip} {event.address?.city}
                                     </span>
                                 )}
                             </span>
@@ -106,16 +129,16 @@ export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setEx
                             <p style={{ whiteSpace: 'pre-line' }}>{event.description}</p>
                         </div>
                     )}
-                    
-                    {event.link && (
-                        <a href={event.link} target="_blank" rel="noopener noreferrer">{event.link}</a>
+
+                    {!disableFlags.link && event.link && (
+                        <a href={event.link} target="_blank" rel="noopener noreferrer">
+                            {event.link}
+                        </a>
                     )}
                 </div>
             )}
 
-            {!expanded && (event.description || event.address || event.link) && (
-                <p className="event-hint">Napauta tapahtuman otsikkoa nähdäksesi lisätietoja!</p>
-            )}
+
         </div>
     );
 };

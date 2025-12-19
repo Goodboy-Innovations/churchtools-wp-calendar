@@ -18,6 +18,7 @@ import {
   isWithinInterval,
   startOfDay,
   endOfDay,
+  addDays,
 } from 'date-fns';
 import { fi } from 'date-fns/locale';
 import { CalendarDay } from '../types/calendar.types';
@@ -153,4 +154,50 @@ export const getWeekdayNames = (): string[] => {
     start: weekStart,
     end: addMonths(weekStart, 0).setDate(weekStart.getDate() + 6) as any,
   }).map((day) => format(day, 'EEEEEE', { locale: fi }).toUpperCase());
+};
+
+/**
+ * Get date range for upcoming events (from today to N days ahead)
+ */
+export const getUpcomingDateRange = (days: number) => {
+  const from = startOfDay(new Date());
+  const to = addDays(from, days - 1);
+
+  return {
+    from: formatApiDate(from),
+    to: formatApiDate(to),
+  };
+};
+
+/**
+ * Get events for upcoming N days, sorted chronologically and grouped by date
+ */
+export const getUpcomingEvents = (events: Appointment[]) => {
+  const byDay = new Map<string, Appointment[]>();
+
+  events.forEach(e => {
+    const d = startOfDay(parseISO(e.calculated.startDate));
+    const key = d.toISOString();
+
+    byDay.set(key, [...(byDay.get(key) ?? []), e]);
+  });
+
+  return [...byDay.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, dayEvents]) => ({
+      date: new Date(key),
+      events: dayEvents.sort((a, b) =>
+        parseISO(a.calculated.startDate).getTime() -
+        parseISO(b.calculated.startDate).getTime()
+      ),
+    }));
+};
+
+
+
+/**
+ * Format date for list view header (e.g., "MA 15.1.2025")
+ */
+export const formatListViewDate = (date: Date): string => {
+  return format(date, 'EEEEEE d.M.yyyy', { locale: fi }).toUpperCase();
 };

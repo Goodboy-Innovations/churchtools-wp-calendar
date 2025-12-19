@@ -22,26 +22,10 @@ $mobile-breakpoint: 850px;
 // Main container
 .churchtools-calendar {
     -webkit-tap-highlight-color: transparent;
-    // font-family: 'Inter', 'Lato', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
     color: $text-primary;
     line-height: 1.6;
     max-width: 1500px;
     margin: 0 auto;
-    // padding: 20px;
-}
-
-// Calendar card
-.calendar-card {
-    background: $white;
-    border-radius: 16px;
-    box-shadow: $shadow;
-    padding: 32px;
-    transition: box-shadow 0.3s ease;
-
-    @media (max-width: $mobile-breakpoint) {
-        padding: 20px;
-        border-radius: 12px;
-    }
 }
 
 // Month Navigation
@@ -319,9 +303,9 @@ $mobile-breakpoint: 850px;
             display: flex;
             align-items: center;
             gap: 6px;
-            color: $text-secondary;
             font-size: 14px;
             margin-bottom: 8px;
+            font-weight: 600;
 
             .clock-icon {
                 flex-shrink: 0;
@@ -434,6 +418,125 @@ $mobile-breakpoint: 850px;
     }
 }
 
+// List View Styles
+.churchtools-calendar.listview {
+  // 🔑 single scaling knob
+  --lv-scale: 1;
+
+  .listview-card {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .listview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    @media (max-width: $mobile-breakpoint) {
+      gap: 8px;
+    }
+  }
+
+  .listview-day-group {
+    display: grid;
+    grid-template-columns: 35% 1fr;
+    @media (max-width: $mobile-breakpoint) {
+        display: block;
+    }
+    align-items: flex-start;
+    border-bottom: 1px solid $text-secondary;
+    padding-bottom: 14px;
+    padding-top: 10px;
+    .listview-day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        font-size: calc(1.4rem * var(--lv-scale));
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin: 0;
+        color: $text-primary;
+      }
+    }
+
+    .listview-events {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      @media (max-width: $mobile-breakpoint) {
+        gap: 12px;
+      }
+    }
+  }
+
+  // List view specific event item styles
+  .listview-event-item {
+    -webkit-tap-highlight-color: transparent;
+    border: 2px solid $border-color;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 4px;
+    padding-left: 12px;
+
+    .event-header {
+      display: flex;
+      align-items: center;
+      gap: 10%;
+        @media (max-width: $mobile-breakpoint) {
+            display: block;
+        }
+    }
+
+    .dropdown-icon {
+        justify-self: flex-end;
+        cursor: pointer;
+    }
+
+    .event-time span {
+      font-weight: 600;
+      font-size: calc(1.25rem * var(--lv-scale));
+    }
+
+    h3.event-title {
+      font-size: calc(1.25rem * var(--lv-scale));
+      margin: 0;
+    }
+
+    p {
+      font-size: calc(1rem * var(--lv-scale));
+    }
+    a {
+      font-size: calc(1rem * var(--lv-scale));
+    }
+
+    &.non-expandable {
+      cursor: default;
+
+      &:hover {
+        border-color: $border-color;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .no-events {
+    text-align: center;
+    padding: 60px 20px;
+    color: $text-secondary;
+
+    p {
+      margin: 0;
+      font-size: calc(1rem * var(--lv-scale));
+      font-style: italic;
+    }
+  }
+}
+
 // Print styles
 @media print {
     .churchtools-calendar {
@@ -447,6 +550,16 @@ $mobile-breakpoint: 850px;
 
         .event-item {
             break-inside: avoid;
+        }
+
+        &.listview {
+            .listview-header .listview-subtitle {
+                display: none;
+            }
+
+            .day-event-count {
+                display: none;
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "churchtools-wp-calendar",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "WordPress plugin for displaying ChurchTools calendar events",
   "type": "module",
   "scripts": {
