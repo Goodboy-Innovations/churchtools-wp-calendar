@@ -3,7 +3,7 @@
  * Plugin Name: ChurchTools Calendar
  * Plugin URI: https://github.com/Goodboy-Innovations/churchtools-wp-calendar
  * Description: Display ChurchTools calendar events using a shortcode with React and TypeScript
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: Jaakko Ruhanen
  * License: MIT
  * Text Domain: churchtools-calendar
@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('CHURCHTOOLS_CALENDAR_VERSION', '1.1.1');
+define('CHURCHTOOLS_CALENDAR_VERSION', '1.1.2');
 define('CHURCHTOOLS_CALENDAR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CHURCHTOOLS_CALENDAR_PLUGIN_URL', plugin_dir_url(__FILE__));
 
