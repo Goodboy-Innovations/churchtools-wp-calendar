@@ -114,7 +114,7 @@ You can display multiple calendars on the same site by using different calendar 
 
 ## HubSpot CMS
 
-The same calendar runs on HubSpot as a custom module in `hubspot/churchtools-calendar.module`.
+The same calendar runs on HubSpot as a custom module in `hubspot/churchtools-calendar.module`. The module shows the calendar view only.
 
 1. Build the module files:
    ```bash
@@ -129,7 +129,6 @@ The same calendar runs on HubSpot as a custom module in `hubspot/churchtools-cal
 3. Add the **ChurchTools-kalenteri** module to a page and fill in:
    - **ChurchTools-osoite**: your instance, e.g. `https://your-church.church.tools`
    - **Kalenterin ID**: a public calendar
-   - **Näkymä**: calendar or list
    - **Kieli**: automatic (page language), Finnish or English
    - **Lahden vapaaseurakunnan tyyli**: applies `hubspot/themes/lahden-vapaaseurakunta.css`
 

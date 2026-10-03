@@ -2,8 +2,8 @@
  * Lahden vapaaseurakunta theme for the ChurchTools calendar
  *
  * Mirrors lahdenvapaasrk.fi: Artegra Sans (loaded by the site theme),
- * navy #003F5F text and headings, teal #0090A9 highlights, green #BED140
- * accents and warm gray #DFDBD2 borders. Square edges throughout.
+ * navy #003F5F text and headings, teal #0090A9 highlights and warm gray
+ * #DFDBD2 borders. Square edges throughout.
  *
  * Applied when the calendar sits inside an element with the
  * .ct-theme-lahden-vapis class (the HubSpot module adds it by default).
@@ -18,7 +18,7 @@
     --ct-today: #0090A9;
     --ct-selected-bg: #003F5F;
     --ct-selected-text: #ffffff;
-    --ct-indicator: #BED140;
+    --ct-indicator: #0090A9;
     --ct-border: #DFDBD2;
     --ct-bg-hover: #fafafa;
 
@@ -42,11 +42,11 @@
     color: #ffffff;
 }
 
-/* Selected-day badge in the site's green button style */
+/* Selected-day badge matches the selected day in the grid */
 .ct-theme-lahden-vapis .churchtools-calendar .event-list .event-list-header .selected-day-badge {
-    background: #BED140;
-    border-color: #BED140;
-    color: #003F5F;
+    background: #003F5F;
+    border-color: #003F5F;
+    color: #ffffff;
 }
 
 /* Links like on the site: teal, underlined */

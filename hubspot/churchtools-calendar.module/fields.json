@@ -16,26 +16,24 @@
     "default": "1"
   },
   {
-    "name": "view",
-    "label": "Näkymä",
-    "type": "choice",
-    "display": "select",
-    "choices": [
-      ["calendar", "Kalenteri"],
-      ["list", "Lista"]
-    ],
-    "default": "calendar"
-  },
-  {
     "name": "language",
     "label": "Kieli",
     "help_text": "Automaattinen käyttää sivun kieltä.",
     "type": "choice",
     "display": "select",
     "choices": [
-      ["auto", "Automaattinen"],
-      ["fi", "Suomi"],
-      ["en", "English"]
+      [
+        "auto",
+        "Automaattinen"
+      ],
+      [
+        "fi",
+        "Suomi"
+      ],
+      [
+        "en",
+        "English"
+      ]
     ],
     "default": "auto"
   },
